@@ -85,7 +85,13 @@ export default class Formatter {
                 formattedQuery = this.formatQuerySeparator(token, formattedQuery);
             }
             else {
-                formattedQuery = this.formatWithSpaces(token, formattedQuery);
+                var re = /[\u4e00-\u9fa5]/gm
+                if (re.test(token.value)) {
+                    // 中文用户加空格分割
+                    formattedQuery = formattedQuery + token.value
+                } else {
+                    formattedQuery = this.formatWithSpaces(token, formattedQuery);
+                }
             }
         });
         return formattedQuery;
